@@ -1,12 +1,13 @@
 [build-system]
 requires = [
-  "py-build-cmake~=0.5.0",
+  "scikit-build-core>=0.9",
   "numpy",
   "meson",
   "ninja",
+  "wheel",
   "meson-python"
 ]
-build-backend = "py_build_cmake.build"
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "ncorpos-utilidades-py"
@@ -17,16 +18,7 @@ readme = "README.md"
 license = { file = "LICENSE" }
 dependencies = ["numpy"]
 
-[tool.py-build-cmake.module]
-name = "ncorpos_utilidades"
-directory = "src"
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["ncorpos_utilidades"]
 
-[tool.py-build-cmake.sdist]
-include = ["CMakeLists.txt", "src/ext"]
-
-[tool.py-build-cmake.cmake]
-minimum_version = "3.17"
-build_type = "RelWithDebInfo"
-source_path = "."
-build_args = ["-j"]
-install_components = ["python_modules"]

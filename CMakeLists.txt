@@ -12,7 +12,9 @@ find_package(Python3 REQUIRED COMPONENTS
 
 add_subdirectory("src/ncorpos_utilidades/ext/ncorpos_utilidades" utilidades)
 set(MOD_DIR ${utilidades_BINARY_DIR})
-MESSAGE("MOD DIR: ${MOD_DIR}")
+set_target_properties(utilidades PROPERTIES
+  POSITION_INDEPENDENT_CODE ON
+)
 
 # ---------------------------------------------------------------------------
 # f2py: gerar wrapper C (SEM -c)
@@ -34,9 +36,11 @@ add_custom_command(
       -m ${F2PY_MODULE_NAME}
       ${F2PY_WRAPPER_SRC}
       --lower
+      --include-paths=${MOD_DIR}
       --quiet
   DEPENDS
     ${F2PY_WRAPPER_SRC}
+    utilidades
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   COMMENT "Gerando wrapper C via f2py"
 )
@@ -77,6 +81,7 @@ set_target_properties(${F2PY_MODULE_NAME} PROPERTIES
   PREFIX ""
   OUTPUT_NAME "${F2PY_MODULE_NAME}"
   INSTALL_RPATH "$ORIGIN"
+  BUILD_WITH_INSTALL_RPATH ON
 )
 
 # ---------------------------------------------------------------------------
