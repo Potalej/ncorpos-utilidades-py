@@ -9,10 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: '${{ matrix.python }}:${{ matrix.python-version }}${{ matrix.image-suffix }}-bullseye'
-    strategy:
-      matrix:
-        python: ['python']
 
     steps:
       - uses: actions/checkout@v4
