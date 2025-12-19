@@ -28,7 +28,6 @@ add_custom_command(
   OUTPUT ${F2PY_OUTPUT}
   COMMAND
     ${Python3_EXECUTABLE} -m numpy.f2py
-      -c
       -m ${F2PY_MODULE_NAME}
       ${F2PY_WRAPPER}
 
