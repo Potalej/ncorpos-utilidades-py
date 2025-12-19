@@ -54,7 +54,7 @@ jobs:
 
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/ncorpos-vi-py
+      url: https://test.pypi.org/p/ncorpos-utilidades-py
 
     permissions:
       id-token: write
