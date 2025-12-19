@@ -17,7 +17,7 @@ jobs:
       - name: Install build tools
         run: |
           python -m pip install --upgrade pip
-          python -m pip install cibuildwheel twine build numpy
+          python -m pip install cibuildwheel twine build "numpy>=1.26"
           git submodule update --init --recursive
 
       - name: Build wheels with cibuildwheel
