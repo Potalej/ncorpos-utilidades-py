@@ -11,7 +11,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "ncorpos-utilidades-py"
-version = "0.1.1"
+version = "0.0.5"
 description = "Utilidades via Fortran"
 authors = [{ name = "potalej" }]
 readme = "README.md"
@@ -19,6 +19,10 @@ license = { file = "LICENSE" }
 dependencies = ["numpy"]
 
 [tool.scikit-build]
-build-dir = "build/{wheel_tag}"
 wheel.packages = ["ncorpos_utilidades"]
 
+[tool.scikit-build.sdist]
+include = [
+  "CMakeLists.txt",
+  "src/ncorpos_utilidades/**"
+]
