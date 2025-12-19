@@ -26,6 +26,7 @@ jobs:
         env:
           CIBW_BUILD: "cp310-* cp311-* cp312-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_SKIP: "*-musllinux_*"
       
           CIBW_BEFORE_ALL_LINUX: |
             yum install -y gcc-gfortran openblas-devel lapack-devel
