@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+  "py-build-cmake~=0.5.0",
+  "numpy",
+  "meson",
+  "ninja",
+  "meson-python"
+]
+build-backend = "py_build_cmake.build"
+
+[project]
+name = "ncorpos-utilidades-py"
+version = "0.1.1"
+description = "Utilidades via Fortran"
+authors = [{ name = "potalej" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+dependencies = ["numpy"]
+
+[tool.py-build-cmake.module]
+name = "ncorpos_utilidades"
+directory = "src"
+
+[tool.py-build-cmake.sdist]
+include = ["CMakeLists.txt", "src/ext"]
+
+[tool.py-build-cmake.cmake]
+minimum_version = "3.17"
+build_type = "RelWithDebInfo"
+source_path = "."
+build_args = ["-j"]
+install_components = ["python_modules"]
