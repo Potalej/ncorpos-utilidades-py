@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(ncorpos_utilidades_py VERSION 0.0.6 LANGUAGES C Fortran)
+project(ncorpos_utilidades_py VERSION 0.0.7 LANGUAGES C Fortran)
 
 option(SKBUILD "Should be ON of being build by skbuild, 
 and OFF of being build by regular cmake" OFF)
@@ -15,6 +15,18 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
       "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.\n"
   )
 endif()
+
+
+
+# Ler a versão do pyproject.toml
+file(READ "${CMAKE_SOURCE_DIR}/pyproject.toml" PYPROJECT_CONTENTS)
+string(REGEX MATCH "version *= *\"([^\"]+)\"" _ ${PYPROJECT_CONTENTS})
+set(PACKAGE_VERSION "${CMAKE_MATCH_1}")
+
+# Gerar src/ncorpos_utilidades/_version.py
+file(WRITE "${CMAKE_SOURCE_DIR}/src/ncorpos_utilidades/_version.py"
+"__version__ = \"${PACKAGE_VERSION}\"\n")
+
 
 
 # ---------------------------------------------------------------------------

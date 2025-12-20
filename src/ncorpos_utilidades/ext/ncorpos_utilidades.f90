@@ -1,8 +1,7 @@
 module ncorpos_utilidades
   use utilidades
   implicit none
-  private
-  public teste
+  public
 contains
 
 subroutine teste (u, v)
