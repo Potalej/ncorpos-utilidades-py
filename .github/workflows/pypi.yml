@@ -1,7 +1,5 @@
 name: Build and Publish TestPyPi
 
-on: push
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,6 +23,10 @@ jobs:
           python -m cibuildwheel --output-dir wheelhouse
         env:
           CIBW_BUILD: "cp310-* cp311-* cp312-*"
+          
+          CIBW_TEST_REQUIRES: pytest
+          CIBW_TEST_COMMAND: pytest {project}/tests
+
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
       
