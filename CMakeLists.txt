@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(ncorpos_utilidades_py VERSION 0.2.0 LANGUAGES C Fortran)
+project(ncorpos_utilidades_py VERSION 0.2.1 LANGUAGES C Fortran)
 
 option(SKBUILD "Should be ON of being build by skbuild, 
 and OFF of being build by regular cmake" OFF)

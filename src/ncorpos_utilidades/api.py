@@ -209,7 +209,7 @@ def momento_linear_total (momentos):
   momentos : list | np.array
     Momentosl ineares das particulas.
   """
-  return nut.py_momento_linear_total(massas, posicoes)
+  return nut.py_momento_linear_total(momentos)
 
 def anisotropia_tensor_inercia (massas, posicoes):
   """
