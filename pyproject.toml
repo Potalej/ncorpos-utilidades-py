@@ -11,7 +11,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "ncorpos-utilidades-py"
-version = "0.0.8"
+version = "0.2.0"
 description = "Utilidades via Fortran"
 authors = [{ name = "potalej" }]
 readme = "README.md"

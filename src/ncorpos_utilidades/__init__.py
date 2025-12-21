@@ -18,7 +18,6 @@ def _preload_library():
         if lib_path.exists():
             try:
                 ctypes.CDLL(str(lib_path), mode=ctypes.RTLD_GLOBAL)
-                print(f"Preloaded library: {lib_path.name}")
                 break
             except Exception as e:
                 print(f"Failed to preload {lib_path}: {e}")
