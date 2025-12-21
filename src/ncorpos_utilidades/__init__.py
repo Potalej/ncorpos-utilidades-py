@@ -27,5 +27,5 @@ def _preload_library():
 _preload_library()
 
 # Agora importa o módulo
-from .api import teste
+from .api import *
 from ._version import __version__
