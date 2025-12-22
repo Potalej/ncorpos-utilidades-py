@@ -69,6 +69,7 @@ jobs:
             CC=gcc
             CXX=g++
             FC=gfortran
+            OpenBLAS_HOME=C:/mingw64
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
