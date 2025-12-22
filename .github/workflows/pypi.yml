@@ -1,4 +1,4 @@
-name: Build and Publish TestPyPi
+name: Build and Publish PyPi
 
 on:
   push:
@@ -8,7 +8,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -17,6 +21,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
       - name: Install build tools
         run: |
@@ -33,13 +39,23 @@ jobs:
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: pytest {project}/tests
 
+          # Linux
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
-      
           CIBW_BEFORE_ALL_LINUX: |
             yum install -y gcc-gfortran openblas-devel lapack-devel
-            
           CIBW_ENVIRONMENT_LINUX: 'LDFLAGS="-Wl,-rpath,\$ORIGIN -lopenblas -llapack"'
+
+          # Windows
+          CIBW_BEFORE_ALL_WINDOWS: >
+            python -m pip install msys2 &&
+            msys2 -c "pacman -S --noconfirm
+              mingw-w64-ucrt-x86_64-gcc-fortran
+              mingw-w64-ucrt-x86_64-openblas"
+          CIBW_ENVIRONMENT_WINDOWS: >
+            FC=gfortran
+            CC=gcc
+            CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Release" 
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -47,48 +63,48 @@ jobs:
           name: python-package-distributions
           path: ./wheelhouse/*.whl
   
-  publicar-testpypi:
-    name: Publicar para o TestPyPI
-    needs:
-    - build
-    runs-on: ubuntu-latest
+  # publicar-testpypi:
+  #   name: Publicar para o TestPyPI
+  #   needs:
+  #   - build
+  #   runs-on: ubuntu-latest
 
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/ncorpos-utilidades-py
+  #   environment:
+  #     name: testpypi
+  #     url: https://test.pypi.org/p/ncorpos-utilidades-py
 
-    permissions:
-      id-token: write
+  #   permissions:
+  #     id-token: write
 
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v6
-      with:
-        name: python-package-distributions
-        path: dist/
+  #   steps:
+  #   - name: Download all the dists
+  #     uses: actions/download-artifact@v6
+  #     with:
+  #       name: python-package-distributions
+  #       path: dist/
       
-    - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
+  #   - name: Publish distribution 📦 to TestPyPI
+  #     uses: pypa/gh-action-pypi-publish@release/v1
+  #     with:
+  #       repository-url: https://test.pypi.org/legacy/
 
-  publicar-pypi:
-    name: >-
-      Publicar para o PyPI
-    needs:
-    - build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/ncorpos-utilidades-py
-    permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+  # publicar-pypi:
+  #   name: >-
+  #     Publicar para o PyPI
+  #   needs:
+  #   - build
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: pypi
+  #     url: https://pypi.org/p/ncorpos-utilidades-py
+  #   permissions:
+  #     id-token: write  # IMPORTANT: mandatory for trusted publishing
 
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v6
-      with:
-        name: python-package-distributions
-        path: dist/
-    - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+  #   steps:
+  #   - name: Download all the dists
+  #     uses: actions/download-artifact@v6
+  #     with:
+  #       name: python-package-distributions
+  #       path: dist/
+  #   - name: Publish distribution 📦 to PyPI
+  #     uses: pypa/gh-action-pypi-publish@release/v1
