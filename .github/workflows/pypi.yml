@@ -66,7 +66,7 @@ jobs:
             gcc --version
             gfortran --version
           
-          OpenBLAS_HOME=${{ steps.msys2.outputs.msys2-location }}/mingw64
+          OpenBLAS_HOME: ${{ steps.msys2.outputs.msys2-location }}/mingw64
 
           CIBW_ENVIRONMENT_WINDOWS: |
             CC=gcc
