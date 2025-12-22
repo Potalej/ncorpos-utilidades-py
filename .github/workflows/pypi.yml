@@ -43,6 +43,19 @@ jobs:
             mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-openblas
 
+      - name: Verify OpenBLAS Installation
+        if: runner.os == 'Windows'
+        run: |
+          echo "Checking for OpenBLAS files..."
+          # Check for library file
+          find "C:/msys64/mingw64" -name "libopenblas*" -type f 2>/dev/null | head -5
+          # Check for include directory
+          find "C:/msys64/mingw64" -name "cblas.h" -type f 2>/dev/null
+          # Check for library file
+          find "C:/mingw64" -name "libopenblas*" -type f 2>/dev/null | head -5
+          # Check for include directory
+          find "C:/mingw64" -name "cblas.h" -type f 2>/dev/null
+
       - name: Build wheels with cibuildwheel
         run: |
           python -m cibuildwheel --output-dir wheelhouse
@@ -70,10 +83,12 @@ jobs:
             CXX=g++
             FC=gfortran
             OpenBLAS_HOME=C:/mingw64
+            OpenBLAS_ROOT=C:/mingw64
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
               -DCMAKE_PREFIX_PATH=C:/mingw64 \
+              -DOpenBLAS_ROOT=C:/mingw64 \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
