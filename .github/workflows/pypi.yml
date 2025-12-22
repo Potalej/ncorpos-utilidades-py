@@ -35,11 +35,11 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
-          path-type: inherit
           update: true
           install: >
             mingw-w64-ucrt-x86_64-gcc-fortran
             mingw-w64-ucrt-x86_64-openblas
+          add-path: true
 
       - name: Build wheels with cibuildwheel
         run: |
@@ -62,7 +62,7 @@ jobs:
             CC=gcc
             CXX=g++
             FC=gfortran
-            CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=gfortran -DPython_FIND_STRATEGY=LOCATION
+            SKBUILD_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=gfortran -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
