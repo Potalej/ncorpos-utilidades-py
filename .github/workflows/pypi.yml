@@ -33,6 +33,7 @@ jobs:
       - name: Set up MSYS2 (Windows)
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
+        id: msys2
         with:
           msystem: MINGW64
           update: true
@@ -43,12 +44,12 @@ jobs:
             mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-openblas
 
-      - name: Debug MSYS2 OpenBLAS
-        run: |
-          pacman -Ql mingw-w64-x86_64-openblas
-
       - name: Procurando pelo openblas
+        env:
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
         run: |
+          echo "Location:"
+          echo "$env:MSYS2_LOCATION"
           echo "Checking for OpenBLAS files..."
           dir "C:/msys64/mingw64/include"
           echo "Checking for OpenBLAS files..."
@@ -84,6 +85,7 @@ jobs:
             FC=gfortran
             OpenBLAS_HOME=C:/mingw64
             OpenBLAS_ROOT=C:/mingw64
+            PKG_CONFIG_PATH: C:\msys64\mingw64\lib\pkgconfig
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
