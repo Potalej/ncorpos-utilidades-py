@@ -50,6 +50,11 @@ jobs:
         run: |
           echo "Location:"
           echo "$env:MSYS2_LOCATION"
+          echo "Location lib:"
+          echo dir "$env:MSYS2_LOCATION\include"
+          echo dir "$env:MSYS2_LOCATION\lib"
+          echo dir "$env:MSYS2_LOCATION/include"
+          echo dir "$env:MSYS2_LOCATION/lib"
           echo "Checking for OpenBLAS files..."
           dir "C:/msys64/mingw64/include"
           echo "Checking for OpenBLAS files..."
