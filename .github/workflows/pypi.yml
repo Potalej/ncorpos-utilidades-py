@@ -73,7 +73,7 @@ jobs:
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
-              -DCMAKE_PREFIX_PATH=C:/msys64/mingw64 \
+              -DCMAKE_PREFIX_PATH=C:/mingw64 \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
