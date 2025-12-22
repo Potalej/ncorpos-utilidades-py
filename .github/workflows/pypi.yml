@@ -36,12 +36,12 @@ jobs:
         with:
           msystem: UCRT64
           update: true
+          path-type: inherit
           install: >
             mingw-w64-ucrt-x86_64-cmake
             mingw-w64-ucrt-x86_64-ninja
             mingw-w64-ucrt-x86_64-gcc-fortran
             mingw-w64-ucrt-x86_64-openblas
-          add-path: true
 
       - name: Build wheels with cibuildwheel
         run: |
@@ -69,7 +69,13 @@ jobs:
             CC=gcc
             CXX=g++
             FC=gfortran
-            SKBUILD_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=gfortran -DPython_FIND_STRATEGY=LOCATION
+            SKBUILD_CMAKE_ARGS=\
+              -DCMAKE_C_COMPILER=gcc \
+              -DCMAKE_Fortran_COMPILER=gfortran \
+              -DOpenBLAS_DIR=C:/msys64/ucrt64 \
+              -DOpenBLAS_INCLUDE_DIR=C:/msys64/ucrt64/include \
+              -DOpenBLAS_LIB=C:/msys64/ucrt64/lib/libopenblas.dll.a \
+              -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
