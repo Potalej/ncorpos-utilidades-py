@@ -46,6 +46,8 @@ jobs:
       - name: Procurando pelo openblas
         run: |
           echo "Checking for OpenBLAS files..."
+          dir "C:/msys64/mingw64/include"
+          echo "Checking for OpenBLAS files..."
           dir "C:/mingw64/include"
           echo "Checking for OpenBLAS files..."
           dir "C:/mingw64/lib"
