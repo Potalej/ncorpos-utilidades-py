@@ -65,21 +65,18 @@ jobs:
             echo "Using GCC toolchain"
             gcc --version
             gfortran --version
-
-          # Local do MSYS2
-          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
             
           CIBW_ENVIRONMENT_WINDOWS: |
             CC=gcc
             CXX=g++
             FC=gfortran
-            SET OpenBLAS_HOME="$env:MSYS2_LOCATION"
+            SET OpenBLAS_HOME=${{ steps.msys2.outputs.msys2-location }}
             PKG_CONFIG_PATH: C:\msys64\mingw64\lib\pkgconfig
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
               -DCMAKE_PREFIX_PATH=C:/mingw64 \
-              -DOpenBLAS_ROOT="$env:MSYS2_LOCATION" \
+              -DOpenBLAS_ROOT=${{ steps.msys2.outputs.msys2-location }} \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
