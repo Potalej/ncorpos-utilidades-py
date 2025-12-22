@@ -70,7 +70,7 @@ jobs:
             CC=gcc
             CXX=g++
             FC=gfortran
-            SET OpenBLAS_HOME=${{ steps.msys2.outputs.msys2-location }}
+            OpenBLAS_HOME=${{ steps.msys2.outputs.msys2-location }}\mingw64
             PKG_CONFIG_PATH: C:\msys64\mingw64\lib\pkgconfig
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
