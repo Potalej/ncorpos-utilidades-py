@@ -34,14 +34,14 @@ jobs:
         if: runner.os == 'Windows'
         uses: msys2/setup-msys2@v2
         with:
-          msystem: UCRT64
+          msystem: MINGW64
           update: true
           path-type: inherit
           install: >
-            mingw-w64-ucrt-x86_64-cmake
-            mingw-w64-ucrt-x86_64-ninja
-            mingw-w64-ucrt-x86_64-gcc-fortran
-            mingw-w64-ucrt-x86_64-openblas
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-gcc-fortran
+            mingw-w64-x86_64-openblas
 
       - name: Build wheels with cibuildwheel
         run: |
@@ -72,9 +72,9 @@ jobs:
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
-              -DOpenBLAS_DIR=C:/msys64/ucrt64 \
-              -DOpenBLAS_INCLUDE_DIR=C:/msys64/ucrt64/include \
-              -DOpenBLAS_LIB=C:/msys64/ucrt64/lib/libopenblas.dll.a \
+              -DOpenBLAS_DIR=C:/msys64/mingw64 \
+              -DOpenBLAS_INCLUDE_DIR=C:/msys64/mingw64/include \
+              -DOpenBLAS_LIBRARIES=C:/msys64/mingw64/lib/libopenblas.dll.a \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
