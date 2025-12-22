@@ -72,9 +72,8 @@ jobs:
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
-              -DOpenBLAS_DIR=C:/msys64/mingw64 \
-              -DOpenBLAS_INCLUDE_DIR=C:/msys64/mingw64/include \
-              -DOpenBLAS_LIBRARIES=C:/msys64/mingw64/lib/libopenblas.dll.a \
+              -DOpenBLAS_ROOT=C:/msys64/mingw64 \
+              -DCMAKE_PREFIX_PATH=C:/msys64/mingw64 \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
