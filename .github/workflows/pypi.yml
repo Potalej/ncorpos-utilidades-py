@@ -80,6 +80,8 @@ jobs:
               -DCMAKE_PREFIX_PATH=${{ steps.msys2.outputs.msys2-location }} \
               -DOpenBLAS_ROOT=${{ steps.msys2.outputs.msys2-location }} \
               -DPython_FIND_STRATEGY=LOCATION
+            F2PY_FFLAGS=-L${{ steps.msys2.outputs.msys2-location }}/mingw64/lib -lopenblas
+            F2PY_LDFLAGS=-L<build_dir>/utilidades -lutilidades
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
