@@ -37,6 +37,8 @@ jobs:
           msystem: UCRT64
           update: true
           install: >
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
             mingw-w64-ucrt-x86_64-gcc-fortran
             mingw-w64-ucrt-x86_64-openblas
           add-path: true
@@ -57,12 +59,28 @@ jobs:
             yum install -y gcc-gfortran openblas-devel lapack-devel
           CIBW_ENVIRONMENT_LINUX: 'LDFLAGS="-Wl,-rpath,\$ORIGIN -lopenblas -llapack"'
 
-          # Windows
+          # Windows - Configurações específicas para GCC/MinGW
+          CIBW_BEFORE_BUILD_WINDOWS: |
+            echo "Using GCC toolchain"
+            gcc --version
+            gfortran --version
           CIBW_ENVIRONMENT_WINDOWS: |
+            # Forçar uso do GCC/MinGW
             CC=gcc
             CXX=g++
             FC=gfortran
-            SKBUILD_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=gfortran -DPython_FIND_STRATEGY=LOCATION
+            AR=ar
+            LD=g++
+            # Usar o compilador do MSYS2
+            DISTUTILS_USE_SDK=1
+            MSSdk=0
+            # Skbuild/CMake
+            SKBUILD_CMAKE_ARGS=-DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_Fortran_COMPILER=gfortran -DPython_FIND_STRATEGY=LOCATION -G "MinGW Makefiles"
+            # Path do MSYS2
+            PATH=/c/msys64/ucrt64/bin:$PATH
+          CIBW_BEFORE_ALL_WINDOWS: |
+            echo "Setting up MinGW environment"
+            pacman -S --noconfirm mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-ninja
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
