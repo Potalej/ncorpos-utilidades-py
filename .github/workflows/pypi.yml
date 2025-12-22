@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +29,16 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install cibuildwheel twine build "numpy>=1.26"
           git submodule update --init --recursive
+
+      - name: Set up MSYS2 (Windows)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >
+            mingw-w64-ucrt-x86_64-gcc-fortran
+            mingw-w64-ucrt-x86_64-openblas
 
       - name: Build wheels with cibuildwheel
         run: |
@@ -47,15 +57,10 @@ jobs:
           CIBW_ENVIRONMENT_LINUX: 'LDFLAGS="-Wl,-rpath,\$ORIGIN -lopenblas -llapack"'
 
           # Windows
-          CIBW_BEFORE_ALL_WINDOWS: >
-            python -m pip install msys2 &&
-            msys2 -c "pacman -S --noconfirm
-              mingw-w64-ucrt-x86_64-gcc-fortran
-              mingw-w64-ucrt-x86_64-openblas"
           CIBW_ENVIRONMENT_WINDOWS: >
             FC=gfortran
             CC=gcc
-            CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Release" 
+            CMAKE_GENERATOR=MinGW Makefiles
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
