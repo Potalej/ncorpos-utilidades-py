@@ -51,7 +51,7 @@ jobs:
           echo "Location:"
           echo "$env:MSYS2_LOCATION"
           echo "Location lib:"
-          dir "$env:MSYS2_LOCATION\mingw64"
+          dir "$env:MSYS2_LOCATION\mingw64\include"
           dir "$env:MSYS2_LOCATION/include"
           dir "$env:MSYS2_LOCATION/lib"
           dir "$env:MSYS2_LOCATION\include"
