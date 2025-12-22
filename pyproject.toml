@@ -5,7 +5,6 @@ requires = [
   "meson",
   "ninja",
   "wheel",
-  "meson-python"
 ]
 build-backend = "scikit_build_core.build"
 
@@ -20,6 +19,13 @@ dependencies = ["numpy"]
 
 [tool.scikit-build]
 wheel.packages = ["ncorpos_utilidades"]
+cmake.args = [
+  "-G", "MinGW Makefiles",
+  "-DCMAKE_C_COMPILER=gcc",
+  "-DCMAKE_CXX_COMPILER=g++", 
+  "-DCMAKE_Fortran_COMPILER=gfortran",
+  "-DCMAKE_MAKE_PROGRAM=ninja"
+]
 
 [tool.scikit-build.sdist]
 include = [
