@@ -43,6 +43,12 @@ jobs:
             mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-openblas
 
+        run: |
+          echo "Checking for OpenBLAS files..."
+          dir "C:/mingw64/include"
+          echo "Checking for OpenBLAS files..."
+          dir "C:/mingw64/lib"
+
       - name: Build wheels with cibuildwheel
         run: |
           python -m cibuildwheel --output-dir wheelhouse
