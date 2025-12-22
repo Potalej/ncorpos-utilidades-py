@@ -43,6 +43,10 @@ jobs:
             mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-openblas
 
+      - name: Debug MSYS2 OpenBLAS
+        run: |
+          pacman -Ql mingw-w64-x86_64-openblas
+
       - name: Procurando pelo openblas
         run: |
           echo "Checking for OpenBLAS files..."
