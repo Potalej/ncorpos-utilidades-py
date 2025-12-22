@@ -57,11 +57,12 @@ jobs:
           CIBW_ENVIRONMENT_LINUX: 'LDFLAGS="-Wl,-rpath,\$ORIGIN -lopenblas -llapack"'
 
           # Windows
-          CIBW_ENVIRONMENT_WINDOWS: >
+          CIBW_ENVIRONMENT_WINDOWS: |
             FC=gfortran
             CC=gcc
             CMAKE_GENERATOR=MinGW Makefiles
-
+            CMAKE_Fortran_COMPILER=gfortran
+            
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
