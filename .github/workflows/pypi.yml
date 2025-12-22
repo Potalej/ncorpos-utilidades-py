@@ -44,25 +44,6 @@ jobs:
             mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-openblas
 
-      - name: Procurando pelo openblas
-        env:
-          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
-        run: |
-          echo "Location:"
-          echo "$env:MSYS2_LOCATION"
-          echo "Location lib:"
-          dir "$env:MSYS2_LOCATION\mingw64\include"
-          dir "$env:MSYS2_LOCATION/include"
-          dir "$env:MSYS2_LOCATION/lib"
-          dir "$env:MSYS2_LOCATION\include"
-          dir "$env:MSYS2_LOCATION\lib"
-          echo "Checking for OpenBLAS files..."
-          dir "C:/msys64/mingw64/include"
-          echo "Checking for OpenBLAS files..."
-          dir "C:/mingw64/include"
-          echo "Checking for OpenBLAS files..."
-          dir "C:/mingw64/lib"
-
       - name: Build wheels with cibuildwheel
         run: |
           python -m cibuildwheel --output-dir wheelhouse
@@ -84,19 +65,22 @@ jobs:
             echo "Using GCC toolchain"
             gcc --version
             gfortran --version
+
+          # Local do MSYS2
+          MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
             
           CIBW_ENVIRONMENT_WINDOWS: |
             CC=gcc
             CXX=g++
             FC=gfortran
-            OpenBLAS_HOME=C:/mingw64
-            OpenBLAS_ROOT=C:/mingw64
+            OpenBLAS_HOME="$env:MSYS2_LOCATION"
+            OpenBLAS_ROOT="$env:MSYS2_LOCATION"
             PKG_CONFIG_PATH: C:\msys64\mingw64\lib\pkgconfig
             SKBUILD_CMAKE_ARGS=\
               -DCMAKE_C_COMPILER=gcc \
               -DCMAKE_Fortran_COMPILER=gfortran \
               -DCMAKE_PREFIX_PATH=C:/mingw64 \
-              -DOpenBLAS_ROOT=C:/mingw64 \
+              -DOpenBLAS_ROOT="$env:MSYS2_LOCATION" \
               -DPython_FIND_STRATEGY=LOCATION
 
       - name: Upload artifacts
