@@ -48,6 +48,25 @@ posicoes : list | np.array
   Posicoes das particulas
 ```
 
+### `crossing_time`
+
+```text
+Calculo do crossing time: G M^2 / (|V| SQRT(2 T / M))
+
+Parametros
+----------
+massas : list | np.array
+  Massas das particulas.
+posicoes : list | np.array
+  Posicoes das particulas
+momentos : list | np.array
+  Momentos lineares das particulas
+G : float = 1.0
+  Constante de gravitacao universal.
+eps : float = 0.0
+  Fator de amortecimento.
+```
+
 ### `energia_cinetica`
 
 ```text

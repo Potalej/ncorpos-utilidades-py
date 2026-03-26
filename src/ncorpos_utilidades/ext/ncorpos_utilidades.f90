@@ -139,4 +139,13 @@ FUNCTION py_anisotropia_velocidades (massas, posicoes, momentos) RESULT(Av)
   Av = anisotropia_velocidades(massas, posicoes, momentos)
 END FUNCTION
 
+FUNCTION py_crossing_time (massas, posicoes, momentos, G, eps) RESULT(ct)
+  REAL(8), DIMENSION(:),   INTENT(IN) :: massas
+  REAL(8), DIMENSION(:,:), INTENT(IN) :: posicoes, momentos
+  REAL(8), INTENT(IN) :: G, eps
+  REAL(8) :: ct
+
+  ct = crossing_time(massas, posicoes, momentos, G, eps)
+END FUNCTION
+
 END MODULE

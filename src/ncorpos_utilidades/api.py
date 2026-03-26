@@ -239,3 +239,22 @@ def anisotropia_velocidades (massas, posicoes, momentos):
     Momentos lineares das particulas
   """
   return nut.py_anisotropia_velocidades(massas, posicoes, momentos)
+
+def crossing_time (massas, posicoes, momentos, G:float=1.0, eps:float=0.0):
+  """
+  Calculo do crossing time: G M^2 / (|V| SQRT(2 T / M))
+  
+  Parametros
+  ----------
+  massas : list | np.array
+    Massas das particulas.
+  posicoes : list | np.array
+    Posicoes das particulas
+  momentos : list | np.array
+    Momentos lineares das particulas
+  G : float = 1.0
+    Constante de gravitacao universal.
+  eps : float = 0.0
+    Fator de amortecimento.
+  """
+  return nut.py_crossing_time(massas, posicoes, momentos, G, eps)
